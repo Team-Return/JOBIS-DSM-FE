@@ -1,5 +1,10 @@
+import Router from "./router";
 function App() {
-  return null;
+  return (
+    <>
+      <Router />
+    </>
+  );
 }
 
 export default App;
