@@ -3,12 +3,12 @@ import { BlueStar } from "../BlueStar";
 import Step, { IStep } from "../Step";
 
 const Register = () => {
-  const hello: IStep[] = [
+  const gather: IStep[] = [
     { title: "모집년도", content: ["모집년도"], star: true },
-    { title: "모집분야", content: ["문구"] },
+    { title: "모집분야", content: ["어쩌고 저쩌고 대충 문구 들어갈 자리"], enter: true },
     { title: "자격요건", content: ["우대사항", "필수사항"] },
-    { title: "근무조건", content: ["근무 시간(시간)", "실습 수당(만원/월)", "정규직 전환시(연봉)", "복리후생"] },
-    { title: "채용조건", content: ["채용절차", "제출서류"] },
+    { title: "근무조건", content: ["근무 시간", "실습 수당", "정규직 전환시", "복리후생"] },
+    { title: "채용조건", content: ["채용절차", "제출서류"], star: true },
   ];
 
   return (
@@ -21,7 +21,7 @@ const Register = () => {
         <BlueStar>*</BlueStar> 표시는 필수 입력 항목입니다.
       </RequireText>
       <Steps>
-        {hello.map((res, i) => {
+        {gather.map((res, i) => {
           const { title, star, content } = res;
           return <Step key={i} title={title} star={star} content={content}></Step>;
         })}
@@ -40,7 +40,7 @@ const Container = styled.div`
   background-color: ${(props) => props.theme.white};
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
   border-radius: 30px;
-  height: 2000px;
+  min-height: 2000px;
   margin-top: 130px;
   margin-bottom: 80px;
   z-index: 99;
