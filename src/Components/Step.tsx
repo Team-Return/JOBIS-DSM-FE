@@ -1,8 +1,12 @@
 import styled from "styled-components";
 import { BlueStar } from "./BlueStar";
 import Field from "./Register/Field";
-import GatherDate from "./Register/GatherDate";
-import LineComponent from "./Register/Preferential";
+import GatherDate from "./Register/모집년도";
+import LineComponent from "./Register/선";
+import TextArea from "./Register/TextArea";
+import MustHave from "./Register/필수사항";
+import CheckBox from "./Register/CheckBox";
+import 모집날짜 from "./Register/모집날짜";
 
 export interface IStep {
   title: string;
@@ -20,19 +24,50 @@ const Step = ({ title, content, star, enter, placeholder }: IStep) => {
       case "모집분야":
         return [<Field />];
       case "자격요건":
-        return [<LineComponent title={title} />];
+        switch (content) {
+          case "우대사항":
+            return [
+              <div style={{ marginLeft: 71 }}>
+                <TextArea />
+              </div>,
+            ];
+          case "필수사항":
+            return [<MustHave />];
+        }
+        break;
       case "근무조건":
         switch (content) {
           case "근무 시간":
-            return [<LineComponent title={"시간"} />];
+            return [<BlueStar>*</BlueStar>, <LineComponent title={"시간"} />];
           case "실습 수당":
-            return [<LineComponent title={"만원/월"} />];
+            return [<BlueStar>*</BlueStar>, <LineComponent title={"만원/월"} />];
           case "정규직 전환시":
             return [<LineComponent title={"만원/년"} />];
+          case "복리후생":
+            return [
+              <div style={{ marginLeft: 71 }}>
+                <TextArea />
+                <CheckBox title="병역특례 신청" />
+              </div>,
+            ];
         }
         break;
       case "채용조건":
-        return [<LineComponent title={title} />];
+        switch (content) {
+          case "채용 절차":
+            return [<BlueStar>*</BlueStar>];
+          case "제출 서류":
+            return [<BlueStar>*</BlueStar>, <LineComponent title={""} />];
+          case "모집 기간":
+            return [<BlueStar>*</BlueStar>, <모집날짜 />];
+          case "기타 사항":
+            return [
+              <div style={{ marginLeft: 67 }}>
+                <TextArea />
+                <CheckBox title="개인 컨택 여부" />
+              </div>,
+            ];
+        }
     }
   };
 
@@ -40,7 +75,7 @@ const Step = ({ title, content, star, enter, placeholder }: IStep) => {
     <Container>
       <Title>{title}</Title>
       <Line></Line>
-      <Phrases enter={enter}>
+      <Phrases>
         <div>
           {content?.map((res, i) => {
             return (
@@ -61,7 +96,8 @@ export default Step;
 
 const Container = styled.div`
   width: 550px;
-  margin-bottom: 140px;
+  min-height: 230px;
+  margin-bottom: 30px;
 `;
 
 const Title = styled.div`
@@ -78,7 +114,7 @@ const Wrapper = styled.div`
   display: flex;
 `;
 
-const Phrases = styled.div<{ enter: boolean | undefined }>`
+const Phrases = styled.div`
   position: relative;
   display: flex;
   margin-top: 30px;
