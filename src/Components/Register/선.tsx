@@ -12,7 +12,8 @@ const Container = styled.input`
   position: absolute;
   right: 0;
   width: 430px;
-  height: 30px;
+  height: 20px;
+  padding-bottom: 7px;
   border: 0;
   outline: 0;
   border-bottom: 1px solid #cccccc;

@@ -3,12 +3,11 @@ import styled from "styled-components";
 import Calendar from "../../Assets/Calendar.svg";
 
 const GatherDate = () => {
-  const [date, setDate] = useState<string>("2022년도");
-  const dateInput = useRef();
+  const [date, setDate] = useState<number>(2022);
 
   return (
     <Container>
-      <Text>{date}</Text>
+      <Text>{date}년도</Text>
       <Img src={Calendar} alt="달력" />
     </Container>
   );
@@ -35,4 +34,5 @@ const Img = styled.img`
   width: 15px;
   margin-left: 10px;
   margin-bottom: 3px;
+  cursor: pointer;
 `;
