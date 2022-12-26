@@ -54,7 +54,7 @@ body {
   font-weight: 300;
   color: black;
   line-height: 1.2;
-  font-family: 'NanumSquare', sans-serif
+  font-family: 'Avenir LT Std', sans-serif
 }
 .normal		{ font-weight: 400 }
 .bold		{ font-weight: 700 }
