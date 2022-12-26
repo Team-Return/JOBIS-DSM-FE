@@ -1,9 +1,11 @@
 import styled from "styled-components";
+import Background from "../Components/Background/Background";
 import Register from "../Components/Register/Register";
 
 const SignUp = () => {
   return (
     <Container>
+      <Background></Background>
       <Register></Register>
     </Container>
   );
