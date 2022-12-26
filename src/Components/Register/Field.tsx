@@ -1,27 +1,32 @@
 import styled from "styled-components";
 import add from "../../Assets/addField.svg";
 import { BlueStar } from "../BlueStar";
+import GatherFieldBox from "./모집분야박스";
 
 const Field = () => {
   return (
-    <Container>
-      <Wrapper>
-        <img src={add} alt="추가" />
-        <Text>추가</Text>
-        <BlueStar>*</BlueStar>
-      </Wrapper>
-    </Container>
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <Boxs>
+        <GatherFieldBox />
+      </Boxs>
+      <Container>
+        <Wrapper>
+          <img src={add} alt="추가" />
+          <Text>추가</Text>
+          <BlueStar>*</BlueStar>
+        </Wrapper>
+      </Container>
+    </div>
   );
 };
 
 export default Field;
 
 const Container = styled.div`
-  position: absolute;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  top: 30px;
   width: 550px;
   height: 40px;
   border: 2px dashed #cccccc;
@@ -40,4 +45,8 @@ const Text = styled.div`
   font-size: 16px;
   font-weight: 700;
   margin: 0px 5px;
+`;
+
+const Boxs = styled.div`
+  margin-bottom: 30px;
 `;

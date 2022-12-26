@@ -7,6 +7,8 @@ import TextArea from "./Register/TextArea";
 import MustHave from "./Register/필수사항";
 import CheckBox from "./Register/CheckBox";
 import 모집날짜 from "./Register/모집날짜";
+import HiringProcess from "./Register/채용절차";
+import GatherFieldBox from "./Register/모집분야박스";
 
 export interface IStep {
   title: string;
@@ -55,7 +57,7 @@ const Step = ({ title, content, star, enter, placeholder }: IStep) => {
       case "채용조건":
         switch (content) {
           case "채용 절차":
-            return [<BlueStar>*</BlueStar>];
+            return [<BlueStar>*</BlueStar>, <HiringProcess />];
           case "제출 서류":
             return [<BlueStar>*</BlueStar>, <LineComponent title={""} />];
           case "모집 기간":
