@@ -1,14 +1,24 @@
 import styled from "styled-components";
+import Background from "../Components/Background/Background";
+import SignIn from "../Components/SignIn/SignIn";
 
 const Main = () => {
-  return <Container></Container>;
+  return (
+    <Container>
+      <Background />
+      <SignIn></SignIn>
+    </Container>
+  );
 };
 
 export default Main;
 
 const Container = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
 `;

@@ -5,7 +5,7 @@ import Step, { IStep } from "../Step";
 const Register = () => {
   const gather: IStep[] = [
     { title: "모집년도", content: ["모집년도"], star: true },
-    { title: "모집분야", content: ["어쩌고 저쩌고 대충 문구 들어갈 자리"], enter: true },
+    { title: "모집분야", content: [""], enter: true },
     { title: "자격요건", content: ["우대사항", "필수사항"] },
     { title: "근무조건", content: ["근무 시간", "실습 수당", "정규직 전환시", "복리후생"] },
     { title: "채용조건", content: ["채용 절차", "제출 서류", "모집 기간", "기타 사항"] },

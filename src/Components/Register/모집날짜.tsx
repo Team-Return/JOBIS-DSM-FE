@@ -7,8 +7,7 @@ const 모집날짜 = () => {
 
   return (
     <Container>
-      <Text>2022.10.26</Text>
-      <Img src={Calendar} alt="달력" />
+      <Input type="date" />
       <Text>~</Text>
       <Text>2022.11.23</Text>
       <Img src={Calendar} alt="달력" />
@@ -37,4 +36,10 @@ const Img = styled.img`
   margin-left: 10px;
   margin-bottom: 3px;
   cursor: pointer;
+`;
+
+const Input = styled.input`
+  outline: 0;
+  border: 0;
+  color: #7f7f7f;
 `;
