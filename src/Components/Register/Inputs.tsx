@@ -2,6 +2,8 @@ import styled from "styled-components";
 import React, { useState, useEffect } from "react";
 import Juso from "./juso_input";
 import Attachments from "./Attachments";
+import CompaniesState from "../../Store/Recoil/CompaniesState";
+import { useRecoilState } from "recoil";
 
 interface IComponent {
   title: string;
@@ -15,10 +17,17 @@ interface IComponent {
 
 function Inputs({ title, content, placeholder, detail }: IComponent) {
   const [value, setValue] = useState();
+
   const [num1, setNum1] = useState("");
   const [num2, setNum2] = useState("");
   const [fax, setFax] = useState("");
   const [date, setDate] = useState("");
+
+  const [companyInpo, setCompantInpo] = useRecoilState(CompaniesState);
+
+  const changeData = (key: string, value: string | number) => {
+    setCompantInpo({ ...companyInpo, [key]: value });
+  };
 
   useEffect(() => {
     if (date.length === 6) {
@@ -66,6 +75,7 @@ function Inputs({ title, content, placeholder, detail }: IComponent) {
       return <Line__default value={content} />;
     }
     case "사업자 번호": {
+      //changeData("businessNumber", content);
       const businessNum =
         content.substring(0, 3) +
         "-" +
@@ -75,12 +85,15 @@ function Inputs({ title, content, placeholder, detail }: IComponent) {
       return <Line__default placeholder={placeholder} value={businessNum} />;
     }
     case "설립일": {
-      //날짜 형식에 맞는 거 해결하기
       const handleChange = (e: any) => {
         const regex = /^[0-9\b .]{0,10}$/;
+        const regex_ = /[^0-9]/g;
         if (regex.test(e.target.value)) {
           setDate(e.target.value);
         }
+        console.log(date.replace(regex_, ""));
+
+        //changeData("foundeAt", parseInt(date));
       };
       return (
         <Line__default
@@ -100,9 +113,11 @@ function Inputs({ title, content, placeholder, detail }: IComponent) {
     case "전화번호1": {
       const handleChange = (e: any) => {
         const regex = /^[0-9\b -]{0,13}$/;
+        const regex_ = /[^0-9]/g;
         if (regex.test(e.target.value)) {
           setNum1(e.target.value);
         }
+        console.log(num1.replace(regex_, ""));
       };
       return <Line__default type="text" value={num1} onChange={handleChange} />;
     }

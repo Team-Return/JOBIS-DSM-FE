@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import { BlueStar } from "../BlueStar";
 import Inputs from "../Register/Inputs";
+import CompaniesState from "../../Store/Recoil/CompaniesState";
+import axios from "axios";
+import { useRecoilValue } from "recoil";
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 function Companies() {
   const setup = [
@@ -135,6 +140,30 @@ function Companies() {
     },
   ];
 
+  const companyInpo = useRecoilValue(CompaniesState);
+
+  const APILink = () => {
+    axios.post(`${BASE_URL}/companies`, {
+      business_number: companyInpo.business_number,
+      password: companyInpo.password,
+      company_introduce: companyInpo.company_introduce,
+      zip_code1: companyInpo.zip_code1,
+      address1: companyInpo.address1,
+      zip_code2: companyInpo.zip_code2,
+      address2: companyInpo.address2,
+      manager1: companyInpo.manager1,
+      phone_number1: companyInpo.phone_number1,
+      manager2: companyInpo.manager2,
+      phone_number2: companyInpo.phone_number2,
+      fax: companyInpo.fax,
+      email: companyInpo.email,
+      representative_name: companyInpo.representative_name,
+      founded_at: companyInpo.founded_at,
+      worker_number: companyInpo.worker_number,
+      take: companyInpo.take,
+    });
+  };
+
   return (
     <Container>
       <Title>기업 정보 등록</Title>
@@ -174,7 +203,9 @@ function Companies() {
       {/* ----------- */}
       <Display>
         <CancelButton>취소</CancelButton>
-        <ConfirmRequestButton>의뢰서 작성 완료</ConfirmRequestButton>
+        <ConfirmRequestButton onClick={APILink}>
+          의뢰서 작성 완료
+        </ConfirmRequestButton>
       </Display>
     </Container>
   );
