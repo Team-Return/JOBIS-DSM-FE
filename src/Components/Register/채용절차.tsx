@@ -1,13 +1,31 @@
 import { useState } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { methods, processAtom } from "../../Store/Methods";
+import { isModalAtom, modalTypeAtom } from "../../Store/modal";
 import HiringBox from "./채용절차박스";
 
 const HiringProcess = () => {
+  const setIsModal = useSetRecoilState(isModalAtom);
+  const [process, setProcess] = useRecoilState(processAtom);
+  const [method, setMethod] = useRecoilState(methods);
+  const [modalType, setModalType] = useRecoilState(modalTypeAtom);
+
   return (
     <>
-      <Button>+</Button>
+      <Button
+        onClick={() => {
+          setIsModal((prev) => !prev);
+          setModalType("certificate");
+        }}
+      >
+        +
+      </Button>
       <Boxs>
-        <HiringBox></HiringBox>
+        {process.map((res, i) => {
+          const { id, name } = res;
+          return <HiringBox key={id} id={id} index={i} name={name}></HiringBox>;
+        })}
       </Boxs>
     </>
   );

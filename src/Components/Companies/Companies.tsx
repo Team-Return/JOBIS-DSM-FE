@@ -139,8 +139,7 @@ function Companies() {
     <Container>
       <Title>기업 정보 등록</Title>
       <SubTitle>
-        등록된 정보는 본 시스템을 통해 접수된 건에 한하여 정식적으로 검토되며
-        등록된 정보는 서비스 이용에 활용됩니다.
+        등록된 정보는 본 시스템을 통해 접수된 건에 한하여 정식적으로 검토되며 등록된 정보는 서비스 이용에 활용됩니다.
       </SubTitle>
       <RequireText>
         <BlueStar>*</BlueStar> 표시는 필수 입력 항목입니다.

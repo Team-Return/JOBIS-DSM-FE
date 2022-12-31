@@ -1,12 +1,25 @@
 import cancelImg from "../../Assets/cancelImg.png";
 import styled from "styled-components";
+import { useRecoilState } from "recoil";
+import { methods, processAtom } from "../../Store/Methods";
 
-const HiringBox = () => {
+const HiringBox = ({ index, name, id }: { index: number; name: string; id: number }) => {
+  const [method, setMethod] = useRecoilState(methods);
+  const [process, setProcess] = useRecoilState(processAtom);
+
+  const deleteBox = () => {
+    setMethod(method.map((user: any) => (user.id === id ? { ...user, isSelect: false } : user)));
+    setProcess(process.filter((user: any) => user.id !== id));
+    console.log(process);
+  };
+
   return (
     <Box>
       <Equal>=</Equal>
-      <Text>1. 서류사항</Text>
-      <Img src={cancelImg} />
+      <Text>
+        {index + 1}. {name}
+      </Text>
+      <Img onClick={deleteBox} src={cancelImg} />
     </Box>
   );
 };

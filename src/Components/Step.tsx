@@ -2,13 +2,13 @@ import styled from "styled-components";
 import { BlueStar } from "./BlueStar";
 import Field from "./Register/Field";
 import GatherDate from "./Register/모집년도";
-import LineComponent from "./Register/선";
-import TextArea from "./Register/TextArea";
 import MustHave from "./Register/필수사항";
 import CheckBox from "./Register/CheckBox";
 import 모집날짜 from "./Register/모집날짜";
 import HiringProcess from "./Register/채용절차";
-import GatherFieldBox from "./Register/모집분야박스";
+import { useRecoilState } from "recoil";
+import React from "react";
+import { recruitmentCompany } from "../Store/requirement";
 
 export interface IStep {
   title: string;
@@ -19,6 +19,19 @@ export interface IStep {
 }
 
 const Step = ({ title, content, star, enter, placeholder }: IStep) => {
+  const [recruitment, setRecruitment] = useRecoilState(recruitmentCompany);
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setRecruitment({ ...recruitment, [name]: value });
+  };
+
+  const onChangeNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+    const onlyNumber = value.replace(/[^0-9]/g, "");
+    setRecruitment({ ...recruitment, [name]: parseInt(onlyNumber) });
+  };
+
   const Component = (title: string, content: string) => {
     switch (title) {
       case "모집년도":
@@ -30,7 +43,7 @@ const Step = ({ title, content, star, enter, placeholder }: IStep) => {
           case "우대사항":
             return [
               <div style={{ marginLeft: 71 }}>
-                <TextArea />
+                <TextArea name="preferential_treatment" onChange={onChange} />
               </div>,
             ];
           case "필수사항":
@@ -40,15 +53,38 @@ const Step = ({ title, content, star, enter, placeholder }: IStep) => {
       case "근무조건":
         switch (content) {
           case "근무 시간":
-            return [<BlueStar>*</BlueStar>, <LineComponent title={"시간"} />];
+            return [
+              <BlueStar>*</BlueStar>,
+              <LineComponent
+                name="work_hours"
+                onChange={onChangeNumber}
+                value={recruitment.work_hours || ""}
+                placeholder="시간"
+              />,
+            ];
           case "실습 수당":
-            return [<BlueStar>*</BlueStar>, <LineComponent title={"만원/월"} />];
+            return [
+              <BlueStar>*</BlueStar>,
+              <LineComponent
+                name="train_pay"
+                onChange={onChangeNumber}
+                value={recruitment.train_pay || ""}
+                placeholder="만원/월"
+              />,
+            ];
           case "정규직 전환시":
-            return [<LineComponent title={"만원/년"} />];
+            return [
+              <LineComponent
+                name="pay"
+                value={recruitment.pay || ""}
+                onChange={onChangeNumber}
+                placeholder="만원/년"
+              />,
+            ];
           case "복리후생":
             return [
               <div style={{ marginLeft: 71 }}>
-                <TextArea />
+                <TextArea name="benefits" onChange={onChange} />
                 <CheckBox title="병역특례 신청" />
               </div>,
             ];
@@ -59,14 +95,17 @@ const Step = ({ title, content, star, enter, placeholder }: IStep) => {
           case "채용 절차":
             return [<BlueStar>*</BlueStar>, <HiringProcess />];
           case "제출 서류":
-            return [<BlueStar>*</BlueStar>, <LineComponent title={""} />];
+            return [
+              <BlueStar>*</BlueStar>,
+              <LineComponent name="submit_document_url" onChange={onChange} placeholder={title} />,
+            ];
           case "모집 기간":
             return [<BlueStar>*</BlueStar>, <모집날짜 />];
           case "기타 사항":
             return [
               <div style={{ marginLeft: 67 }}>
-                <TextArea />
-                <CheckBox title="개인 컨택 여부" />
+                <TextArea name="etc" onChange={onChange} />
+                {/* <CheckBox title="개인 컨택 여부" /> */}
               </div>,
             ];
         }
@@ -126,4 +165,32 @@ const Phrases = styled.div`
 
 const Content = styled.div`
   margin-bottom: 40px;
+`;
+
+const LineComponent = styled.input`
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 0;
+  width: 430px;
+  height: 20px;
+  padding-bottom: 7px;
+  border: 0;
+  outline: 0;
+  border-bottom: 1px solid #cccccc;
+  padding-left: 15px;
+  &::placeholder {
+    color: #7f7f7f;
+  }
+`;
+
+const TextArea = styled.textarea`
+  width: 430px;
+  height: 55px;
+  border: 0;
+  outline: 0;
+  border-bottom: 1px solid #cccccc;
+  resize: none;
+  margin-bottom: 10px;
+  padding-left: 5px;
 `;
