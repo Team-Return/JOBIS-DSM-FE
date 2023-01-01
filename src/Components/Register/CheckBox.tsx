@@ -1,9 +1,18 @@
+import React from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { recruitmentCompany } from "../../Store/requirement";
 
-const CheckBox = ({ title }: { title: string }) => {
+const CheckBox = ({ isCheck, title }: { isCheck?: boolean; title: string }) => {
+  const [recruitment, setRecruitment] = useRecoilState(recruitmentCompany);
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (title === "병역특례 신청") setRecruitment({ ...recruitment, military: e.target.checked });
+  };
+
   return (
     <Wrapper>
-      <Input type="checkbox" />
+      <Input checked={isCheck} onChange={onChange} type="checkbox" />
       <Text>{title}</Text>
     </Wrapper>
   );

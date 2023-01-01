@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { BlueStar } from "../BlueStar";
 import Step, { IStep } from "../Step";
+import company from "../../Utils/apis/companies";
+import { useRecoilState } from "recoil";
+import { recruitmentCompany } from "../../Store/requirement";
 
 const Register = () => {
   const gather: IStep[] = [
@@ -10,6 +13,12 @@ const Register = () => {
     { title: "근무조건", content: ["근무 시간", "실습 수당", "정규직 전환시", "복리후생"] },
     { title: "채용조건", content: ["채용 절차", "제출 서류", "모집 기간", "기타 사항"] },
   ];
+  const [recruitment, setRecruitment] = useRecoilState(recruitmentCompany);
+
+  const postComplete = () => {
+    // company.postRecruitment();
+    console.log(recruitment);
+  };
 
   return (
     <Container>
@@ -29,7 +38,7 @@ const Register = () => {
       </Steps>
       <Display>
         <CancelButton>취소</CancelButton>
-        <ConfirmRequestButton>의뢰서 작성 완료</ConfirmRequestButton>
+        <ConfirmRequestButton onClick={postComplete}>의뢰서 작성 완료</ConfirmRequestButton>
       </Display>
     </Container>
   );

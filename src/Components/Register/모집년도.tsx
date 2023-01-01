@@ -3,7 +3,9 @@ import styled from "styled-components";
 import Calendar from "../../Assets/Calendar.svg";
 
 const GatherDate = () => {
-  const [date, setDate] = useState<number>(2022);
+  const year = new Date();
+
+  const [date, setDate] = useState<number>(year.getFullYear());
 
   return (
     <Container>
