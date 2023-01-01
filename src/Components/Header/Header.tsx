@@ -6,12 +6,14 @@ import * as _ from "./Header.style";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { useMemo } from "react";
 import MojipModal from "../Modals/MojipModal";
-import { ModalAtom } from "../../Store/atom";
+import TechModal from "../Modals/TechModal";
+import { ModalAtom, TechModalAtom } from "../../Store/atom";
 
 const Header = () => {
   const [changeModalValue, setChangeModalValue] = useRecoilState(ModalAtom);
+  const TechModalBool = useRecoilValue(TechModalAtom)
 
-  const Modal = useMemo(() => {
+  const BigModal = useMemo(() => {
     switch (changeModalValue) {
       case "Job":
         return <MojipModal />;
@@ -22,7 +24,8 @@ const Header = () => {
 
   return (
     <>
-      { Modal }
+      { TechModalBool && <TechModal /> }
+      { BigModal }
       <_.Container>
         <_.Wrapper>
           <img width={100} src={Logo} alt="Logo" />

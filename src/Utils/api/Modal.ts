@@ -1,6 +1,6 @@
 import request from "../axios/index";
 
-const getMyInfo = () => {
+const getJob = () => {
     return request({
         url: `/code/job`,
         method: "get",
@@ -10,6 +10,13 @@ const getMyInfo = () => {
     });
 }
 
+const getTech = () => {
+    return request({
+        url: `/code/tech?keyword`,
+        method: "get",
+    });
+}
+
 export default {
-    getMyInfo
+    getTech, getJob
 }

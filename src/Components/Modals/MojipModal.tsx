@@ -6,7 +6,7 @@ import { ModalAtom, TechAtom, TechModalAtom } from "../../Store/atom";
 import user from "../../Utils/api/Modal"
 
 const MojipModal = () => {
-    // const { data, isLoading } = useQuery(["myJob"], user.getJob);
+    const { data, isLoading } = useQuery(["myJob"], user.getJob);
     const ModalCheck = useRef<HTMLDivElement>(null);
     const changeModalState = useSetRecoilState(ModalAtom);
     const [Tech, setTech] = useRecoilState(TechAtom);
@@ -19,9 +19,9 @@ const MojipModal = () => {
         };
     }, []);
 
-    // if (isLoading) {
-    //     return <h2>Loading</h2>
-    // }
+    if (isLoading) {
+        return <h2>Loading</h2>
+    }
 
     const SignInModalDown = () => {
         changeModalState("");
@@ -29,7 +29,7 @@ const MojipModal = () => {
 
     const DeleteArray = (id: number) => {
         setTech(
-            Tech.filter((data) => data.code !== id)   // 배열을 돌며 인덱스1 이 아닌 나머지만 다시 소집한다
+            Tech.filter((datas) => datas.code !== id)   // 배열을 돌며 인덱스1 이 아닌 나머지만 다시 소집한다
         )
     }
 
