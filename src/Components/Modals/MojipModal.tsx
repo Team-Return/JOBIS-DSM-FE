@@ -4,6 +4,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components"
 import { ModalAtom, TechAtom, TechModalAtom } from "../../Store/atom";
 import user from "../../Utils/api/Modal"
+import PlusCard from "../../Assets/PlusCard.svg";
 
 const MojipModal = () => {
     const { data, isLoading } = useQuery(["myJob"], user.getJob);
@@ -123,7 +124,7 @@ const MojipModal = () => {
                                     </>
                                 )
                             })}
-                            <Card onClick={() => { setTechModalBool(true) }}>+ 추가</Card>
+                            <PlusCardImg src={PlusCard} onClick={() => { setTechModalBool(true) }} />
                         </CardWrapper>
                     </BigWrapper>
                     <BigWrapper>
@@ -180,12 +181,13 @@ const BigWrapper = styled.div`
 const CardWrapper = styled.div`
     display: flex;
     overflow: scroll;
-    height: 30px;
+    height: 60px;
     width: 490px;
     align-items: center;
     padding-left: 3px;
     margin-left: 50px;
     margin-top: 15px;
+    padding-bottom: 15px;
 `
 
 const Card = styled.button`
@@ -194,13 +196,19 @@ const Card = styled.button`
     background: #FFFFFF;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
-    height: 25px;
     display: flex;
     margin-right: 7px;
     font-size: 14px;
     font-weight: 400;
     color: #7f7f7f;
     outline: none;
+    justify-content: center;
+    align-items: center;
+`
+
+const PlusCardImg = styled.img`
+    width: 90px;
+    height: 30px;
 `
 
 const XText = styled.div`
