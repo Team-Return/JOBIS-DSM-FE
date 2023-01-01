@@ -1,14 +1,16 @@
 import { useEffect, useRef } from "react"
 import { useQuery } from "react-query";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components"
-import { ModalAtom } from "../../Store/atom";
+import { ModalAtom, TechAtom, TechModalAtom } from "../../Store/atom";
 import user from "../../Utils/api/Modal"
 
 const MojipModal = () => {
-    const { data, isLoading } = useQuery(["myInfo"], user.getMyInfo);
+    // const { data, isLoading } = useQuery(["myJob"], user.getJob);
     const ModalCheck = useRef<HTMLDivElement>(null);
     const changeModalState = useSetRecoilState(ModalAtom);
+    const [Tech, setTech] = useRecoilState(TechAtom);
+    const setTechModalBool = useSetRecoilState(TechModalAtom)
 
     useEffect(() => {
         document.body.style.overflow = "hidden";
@@ -17,14 +19,19 @@ const MojipModal = () => {
         };
     }, []);
 
-    if (isLoading) {
-        return <h2>Loading</h2>
-    }
+    // if (isLoading) {
+    //     return <h2>Loading</h2>
+    // }
 
     const SignInModalDown = () => {
-        console.log(1)
         changeModalState("");
     };
+
+    const DeleteArray = (id: number) => {
+        setTech(
+            Tech.filter((data) => data.code !== id)   // 배열을 돌며 인덱스1 이 아닌 나머지만 다시 소집한다
+        )
+    }
 
     return (
         <>
@@ -108,6 +115,16 @@ const MojipModal = () => {
                     <BigWrapper>
                         <h2>사용기술<span style={{ color: "#0087FF" }}> *</span></h2>
                         <ContentsText>필요한 기술 스택을 추가하세요.</ContentsText>
+                        <CardWrapper>
+                            {Tech.map((res, i) => {
+                                return (
+                                    <>
+                                        <Card key={i}>{res.keyword}<XText onClick={() => DeleteArray(res.code)}>x</XText></Card>
+                                    </>
+                                )
+                            })}
+                            <Card onClick={() => { setTechModalBool(true) }}>+ 추가</Card>
+                        </CardWrapper>
                     </BigWrapper>
                     <BigWrapper>
                         <h2>채용인원<span style={{ color: "#0087FF" }}> *</span></h2>
@@ -141,7 +158,7 @@ const Background = styled.div`
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.6);
-    z-index: 99;
+    z-index: 101;
 `;
 
 const Container = styled.div`
@@ -158,6 +175,39 @@ const Container = styled.div`
 
 const BigWrapper = styled.div`
     margin-bottom: 80px;
+`
+
+const CardWrapper = styled.div`
+    display: flex;
+    overflow: scroll;
+    height: 30px;
+    width: 490px;
+    align-items: center;
+    padding-left: 3px;
+    margin-left: 50px;
+    margin-top: 15px;
+`
+
+const Card = styled.button`
+    border: none;
+    padding: 5px 10px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    height: 25px;
+    display: flex;
+    margin-right: 7px;
+    font-size: 14px;
+    font-weight: 400;
+    color: #7f7f7f;
+    outline: none;
+`
+
+const XText = styled.div`
+    margin-left: 7px;
+    margin-top: -1px;
+    cursor: pointer;
+    color: red;
 `
 
 const SmallWrapper = styled.div`
