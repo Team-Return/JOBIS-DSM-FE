@@ -11,7 +11,7 @@ export const Container = styled.div`
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
   background-color: ${(props) => props.theme.bgColor};
   margin: 0;
-  z-index: 100;
+  z-index: 98;
 `;
 
 export const Wrapper = styled.div`
