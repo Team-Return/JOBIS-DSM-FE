@@ -1,17 +1,23 @@
 import { useState } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import Calendar from "../../Assets/Calendar.svg";
+import { recruitmentCompany } from "../../Store/requirement";
 
 const 모집날짜 = () => {
-  const [date, setDate] = useState<number>(2022);
+  const [recruitment, setRecruitment] = useRecoilState(recruitmentCompany);
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setRecruitment({ ...recruitment, [name]: value });
+    console.log(recruitment);
+  };
 
   return (
     <Container>
-      <Text>2022.10.26</Text>
-      <Img src={Calendar} alt="달력" />
+      <Input name="start_date" onChange={onChange} value={recruitment.start_date} type="date" />
       <Text>~</Text>
-      <Text>2022.11.23</Text>
-      <Img src={Calendar} alt="달력" />
+      <Input name="end_date" onChange={onChange} value={recruitment.end_date} style={{ marginLeft: 17 }} type="date" />
     </Container>
   );
 };
@@ -37,4 +43,10 @@ const Img = styled.img`
   margin-left: 10px;
   margin-bottom: 3px;
   cursor: pointer;
+`;
+
+const Input = styled.input`
+  outline: 0;
+  border: 0;
+  color: #7f7f7f;
 `;

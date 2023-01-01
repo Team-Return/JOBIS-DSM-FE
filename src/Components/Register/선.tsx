@@ -1,7 +1,13 @@
 import styled from "styled-components";
 
-const LineComponent = ({ title }: { title: string }) => {
-  return <Container placeholder={title}></Container>;
+const LineComponent = ({
+  title,
+  content,
+}: {
+  title?: string;
+  content?: string;
+}) => {
+  return <Container placeholder={title}>{content}</Container>;
 };
 
 export default LineComponent;

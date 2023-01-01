@@ -3,11 +3,16 @@ import styled from "styled-components";
 import add from "../../Assets/addField.svg";
 import { ModalAtom } from "../../Store/atom";
 import { BlueStar } from "../BlueStar";
+import GatherFieldBox from "./모집분야박스";
 
 const Field = () => {
   const setChangeModalValue = useSetRecoilState(ModalAtom);
 
   return (
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <Boxs>
+        <GatherFieldBox />
+      </Boxs>
     <Container onClick={() => {setChangeModalValue("Job")}}>
       <Wrapper>
         <img src={add} alt="추가" />
@@ -15,17 +20,17 @@ const Field = () => {
         <BlueStar>*</BlueStar>
       </Wrapper>
     </Container>
+   </div>
   );
 };
 
 export default Field;
 
 const Container = styled.div`
-  position: absolute;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  top: 30px;
   width: 550px;
   height: 40px;
   border: 2px dashed #cccccc;
@@ -44,4 +49,8 @@ const Text = styled.div`
   font-size: 16px;
   font-weight: 700;
   margin: 0px 5px;
+`;
+
+const Boxs = styled.div`
+  margin-bottom: 30px;
 `;
