@@ -1,10 +1,14 @@
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import add from "../../Assets/addField.svg";
+import { ModalAtom } from "../../Store/atom";
 import { BlueStar } from "../BlueStar";
 
 const Field = () => {
+  const setChangeModalValue = useSetRecoilState(ModalAtom);
+
   return (
-    <Container>
+    <Container onClick={() => {setChangeModalValue("Job")}}>
       <Wrapper>
         <img src={add} alt="추가" />
         <Text>추가</Text>
