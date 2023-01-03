@@ -1,34 +1,61 @@
-# PR 요청에 대해
+name: node.js CI
+
 on:
+  push:
+    branches:
+      - "feature/**"
+      - "hotfixes"
+      - "release/**"
+      - "main"
+      - "develop"
   pull_request:
     branches:
-      - develop # develop 브랜치에서 pr 이벤트가 일어났을 때 실행
-    types: [closed] # PR이 closed 됐을 때에만 build 실행
+      - "main"
+      - "develop"
+      - "release/**"
 
-  workflow_dispatch:
-
-defaults:
-  run:
-    working-directory: ./frontend # build steps의 run을 ./frontend 경로에서 실행
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
-    # close 이벤트 중 merge일 때만 동작 && label이 [front] (id: 3141723409) 일때만 동작
-    if: (github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.id, 3141723409))
-      || github.event_name == 'workflow_dispatch'
-    runs-on: deploy-runner
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16]
+
     steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
+
+      - name: Generate Environment Variables File for Production
+        env:
+          REACT_APP_DOMAIN: ${{ secrets.your_key }}
+        run: |
+          echo "your_key=$your_key" >> .env
+      - name: Install Dependencies
+        run: yarn --immutable --immutable-cache --check-cache
+
+      - name: Build Packages
+        run: yarn build
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
 
       - name: Install Dependencies
-        run: npm install
+        run: yarn --immutable --immutable-cache --check-cache
 
-      - name: Build
-        run: npm run build:dev
-
-      - name: Deploy
-        run: aws s3 sync --delete ./build s3://jujeol-dev-deploy
-
-      - name: Cloud Front Caching Invalid
-        run: aws cloudfront create-invalidation --distribution-id $ --paths "/*"
+      - name: Lint
+        run: yarn lint
