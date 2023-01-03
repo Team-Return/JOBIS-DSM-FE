@@ -7,7 +7,8 @@ export type IHiringProgress =
   | "PERSONALITY"
   | "TECH_INTERVIEW"
   | "CULTURE_INTERVIEW"
-  | "FINAL_INTERVIEW";
+  | "FINAL_INTERVIEW"
+  | undefined;
 
 export const HiringProgressTypeChanger = (type: string) => {
   switch (type) {

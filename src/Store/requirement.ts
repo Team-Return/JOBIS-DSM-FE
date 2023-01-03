@@ -22,7 +22,7 @@ export const recruitmentCompany = atom<IRecruitment>({
     benefits: "",
     military: false,
     hiring_progress: [],
-    submit_document_url: "",
+    submit_document: "",
     start_date: dateStr,
     end_date: "",
     etc: "",

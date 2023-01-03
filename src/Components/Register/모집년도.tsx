@@ -25,6 +25,7 @@ const Container = styled.div`
   width: 430px;
   height: 30px;
   border-bottom: 1px solid #cccccc;
+  cursor: not-allowed;
 `;
 
 const Text = styled.div`
@@ -36,5 +37,4 @@ const Img = styled.img`
   width: 15px;
   margin-left: 10px;
   margin-bottom: 3px;
-  cursor: pointer;
 `;

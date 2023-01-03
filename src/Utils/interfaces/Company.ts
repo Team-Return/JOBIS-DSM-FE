@@ -18,7 +18,7 @@ export interface IRecruitment {
   benefits: string;
   military: boolean;
   hiring_progress: IHiringProgress[];
-  submit_document_url: string;
+  submit_document: string;
   start_date: string;
   end_date: string;
   etc: string;

@@ -1,6 +1,6 @@
 import request from "../axios/index";
 import { IArea } from "../interfaces/Company";
-import { IHiringProgress } from "../interfaces/Enums";
+import { HiringProgressTypeChanger, IHiringProgress } from "../interfaces/Enums";
 
 export default {
   signUpCompany(
@@ -61,14 +61,14 @@ export default {
     benefits: string,
     military: boolean,
     hiring_progress: IHiringProgress[],
-    submit_document_url: string,
+    submit_document: string,
     start_date: string,
     end_date: string,
     etc: string
   ) {
     //모집 의뢰서 작성
     return request({
-      url: `/companies/recruitment`,
+      url: `/recruit`,
       method: "post",
       headers: {
         Authorization: `Bearer ${localStorage.access_token}`,
@@ -77,14 +77,14 @@ export default {
         preferential_treatment,
         areas,
         required_grade,
-        required_licenses,
+        required_licenses: [23],
         work_hours,
         train_pay,
         pay,
         benefits,
         military,
         hiring_progress,
-        submit_document_url,
+        submit_document,
         start_date,
         end_date,
         etc,

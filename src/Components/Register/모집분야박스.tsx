@@ -1,14 +1,23 @@
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import cancelImg from "../../Assets/cancelImg.png";
+import { GatherFieldAtom, IGatherField } from "../../Store/atom";
+import { recruitmentCompany } from "../../Store/requirement";
 
-const GatherFieldBox = () => {
+const GatherFieldBox = ({ index, field, tech, people, work }: IGatherField) => {
+  const [recruitment, setRecruitment] = useRecoilState(recruitmentCompany);
+  const [gatherField, setGatherField] = useRecoilState(GatherFieldAtom);
+
   return (
     <Container>
-      <Title>분야: 프론트엔드/백엔드</Title>
-      <SubTitle>사용기술 : Javascript, HTML, CSS, Next.js, React</SubTitle>
-      <SubTitle style={{ top: 70 }}>주요 업무 : 리액트를 이용한 프론트 개발</SubTitle>
-      <PeopleCount>1명</PeopleCount>
-      <CancelImg src={cancelImg}></CancelImg>
+      <Title>분야: {field?.map((res) => res.keyword + " ")}</Title>
+      <SubTitle>사용기술 : {tech?.map((res) => res.keyword + " ")}</SubTitle>
+      <SubTitle style={{ top: 70 }}>주요 업무 : {work}</SubTitle>
+      <PeopleCount>{people}명</PeopleCount>
+      <CancelImg
+        onClick={() => setGatherField(gatherField.filter((res, i) => index !== i))}
+        src={cancelImg}
+      ></CancelImg>
     </Container>
   );
 };
@@ -29,6 +38,7 @@ const CancelImg = styled.img`
   right: 15px;
   width: 10px;
   height: 10px;
+  cursor: pointer;
 `;
 
 const Title = styled.div`
