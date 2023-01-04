@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import CircleImg from "../../Assets/circle.png";
 import BlueCircleImg from "../../Assets/BlueCircle.png";
 import SmallBlue from "../../Assets/SmallBlue.png";
 
