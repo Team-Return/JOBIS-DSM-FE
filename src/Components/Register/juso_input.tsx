@@ -1,8 +1,11 @@
 import styled from "styled-components";
 import DaumPostcode from "react-daum-postcode";
 import { useState } from "react";
+import { useRecoilState } from "recoil";
+import CompaniesState from "../../Store/Recoil/CompaniesState";
 
 interface Type {
+  name: string;
   placeholder: string;
   detail?: {
     content: string;
@@ -10,34 +13,32 @@ interface Type {
   };
 }
 
-function Juso({ placeholder, detail }: Type) {
+function Juso({ name, placeholder, detail }: Type) {
   const [modalState, setModalState] = useState(false);
   const [juso, setJuso] = useState("");
-  const [address, setAddress] = useState("");
-  const [zonecode, setZonecoe] = useState("");
+  const [companyInpo, setCompanyInpo] = useRecoilState(CompaniesState);
+
   const handle = {
-    // 버튼 클릭 이벤트
     clickButton: () => {
       setModalState((current) => !current);
     },
-
-    // 주소 선택 이벤트
     selectAddress: (data: any) => {
-      setAddress(data.address);
-      setZonecoe(data.zonecode);
       const temp = data.address + " " + "(" + data.zonecode + ")";
       setJuso(temp);
       setModalState(false);
+      const addressData = name === "본사" ? "address1" : "address2";
+      const zonecodeData = name === "본사" ? "zip_code1" : "zip_code2";
+      setCompanyInpo({
+        ...companyInpo,
+        [addressData]: data.address,
+        [zonecodeData]: data.zonecode,
+      });
+      console.log(companyInpo);
     },
   };
 
-  const Style = {
-    width: "400px",
-    height: "400px",
-  };
-
   return (
-    <JusoBox>
+    <div>
       <JusoInput>
         <Line__Juso value={juso} placeholder={placeholder} />
         <Btn onClick={handle.clickButton}>검색</Btn>
@@ -48,11 +49,14 @@ function Juso({ placeholder, detail }: Type) {
         )}
       </JusoInput>
       <Line__Detail placeholder={detail?.placeholder} />
-    </JusoBox>
+    </div>
   );
 }
 
-const JusoBox = styled.div``;
+const Style = {
+  width: "400px",
+  height: "400px",
+};
 
 const Modal = styled.div`
   width: 100vw;
