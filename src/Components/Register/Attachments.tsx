@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import React, { useRef, useState } from "react";
 import Files from "./upLoadFiles";
+import axios from "axios";
 
 interface Type {
   name: string;
@@ -20,7 +21,7 @@ function Attachments({ name }: Type) {
     setting.multiple = false;
   }
 
-  const upLoadButtonClick = (e: any) => {
+  const upLoadButtonClick = () => {
     if (flieInput.current) {
       flieInput.current.click();
     }
@@ -28,6 +29,31 @@ function Attachments({ name }: Type) {
   const upLoadChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFiles(Array.from(e.target.files || []));
     console.log(files);
+  };
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    e.persist();
+
+    let formData = new FormData();
+    if (files?.length) {
+      for (let i = 0; i < files.length; i++) {
+        formData.append("files", files[i]);
+        console.log(files[i]);
+        console.log(formData);
+      }
+    }
+
+    await axios({
+      method: "POST",
+      url: "http://3.39.136.247:8080/files",
+      headers: {
+        "Content-Type": "multipart/form-data"
+      },
+      data: formData,
+    }).then((Response) => {
+      console.log(Response);
+    });
   };
 
   return (
@@ -79,7 +105,7 @@ function Attachments({ name }: Type) {
             </div>
           )}
         </GuideText>
-        <React.Fragment>
+        <form onSubmit={onSubmit}>
           <Btn onClick={upLoadButtonClick}>파일추가</Btn>
           <input
             style={{ display: "none" }}
@@ -89,7 +115,8 @@ function Attachments({ name }: Type) {
             multiple={setting.multiple}
             accept={setting.img}
           />
-        </React.Fragment>
+          <button type="submit">업로드</button>
+        </form>
       </UpLoadGuide>
     </LogoUpload>
   );
