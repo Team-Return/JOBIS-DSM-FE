@@ -2,24 +2,20 @@ import styled from "styled-components";
 import { BlueStar } from "../BlueStar";
 import Inputs from "../Register/Inputs";
 import axios from "axios";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import CompaniesState from "../../Store/Recoil/CompaniesState";
 import { useNavigate } from "react-router-dom";
+import { CompanyNumberAtom } from "../../Store/atom";
 
 function Companies() {
+  const [companyNumber, setCompanyNumber] = useRecoilState(CompanyNumberAtom);
   const setup = [
     {
       title: "기업정보",
       data: [
         {
-          title: "기업명",
-          content: "지건컴퍼니",
-          placeholder: "",
-          isStar: true,
-        },
-        {
           title: "사업자 번호",
-          content: "0000000000",
+          content: companyNumber,
           placeholder: "000-00-00000",
           isStar: true,
         },
@@ -161,6 +157,8 @@ function Companies() {
           founded_at: companyInpo.founded_at,
           worker_number: companyInpo.worker_number,
           take: companyInpo.take,
+          company_profile_url:
+            "https://jobis-file.s3.ap-northeast-2.amazonaws.com/jobis-file-LOGO_IMAGE-77c5d888-46a9-465c-8f72-b5b5c3123898.png",
         })
         .then((Response) => {
           console.log(Response);
@@ -176,8 +174,7 @@ function Companies() {
     <Container>
       <Title>기업 정보 등록</Title>
       <SubTitle>
-        등록된 정보는 본 시스템을 통해 접수된 건에 한하여 정식적으로 검토되며
-        등록된 정보는 서비스 이용에 활용됩니다.
+        등록된 정보는 본 시스템을 통해 접수된 건에 한하여 정식적으로 검토되며 등록된 정보는 서비스 이용에 활용됩니다.
       </SubTitle>
       <RequireText>
         <BlueStar>*</BlueStar> 표시는 필수 입력 항목입니다.
@@ -208,9 +205,7 @@ function Companies() {
       })}
       <Display>
         <CancelButton>취소</CancelButton>
-        <ConfirmRequestButton onClick={APILink}>
-          의뢰서 작성 완료
-        </ConfirmRequestButton>
+        <ConfirmRequestButton onClick={APILink}>의뢰서 작성 완료</ConfirmRequestButton>
       </Display>
     </Container>
   );

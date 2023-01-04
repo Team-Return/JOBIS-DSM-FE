@@ -44,3 +44,8 @@ export const GatherFieldAtom = atom<IGatherField[]>({
   key: "gatherFieldAtom",
   default: [],
 });
+
+export const CompanyNumberAtom = atom({
+  key: "companyNumber",
+  default: "",
+});

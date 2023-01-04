@@ -6,12 +6,15 @@ import users from "../../Utils/apis/users";
 import company from "../../Utils/apis/companies";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { CompanyNumberAtom } from "../../Store/atom";
 
 const SignIn = () => {
   const [pw, onChangePw, setPw] = useInput();
   const [id, setId] = useState("");
   const [isNext, setIsNext] = useState(false);
   const [isExist, setIsExist] = useState(false);
+  const [companyNumber, setCompanyNumber] = useRecoilState(CompanyNumberAtom);
   const navigate = useNavigate();
   const onChangeId = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -27,12 +30,22 @@ const SignIn = () => {
       .isCompany(id)
       .then((res) => {
         setIsNext(true);
+        //TODO:: if문 수정
         if (res?.data.exists) {
           setIsExist(true);
         }
       })
-      .catch(() => {
-        alert("에러");
+      .catch((err) => {
+        switch (err.request.status) {
+          case 500:
+            setIsNext(true);
+            setIsExist(false);
+            setCompanyNumber(id);
+            break;
+          default:
+            alert("에러");
+            break;
+        }
       });
   };
 
