@@ -4,6 +4,10 @@ import Step, { IStep } from "../Step";
 import company from "../../Utils/apis/companies";
 import { useRecoilState } from "recoil";
 import { recruitmentCompany } from "../../Store/requirement";
+import { GatherFieldAtom, IGatherField, TechAtom } from "../../Store/atom";
+import { processAtom } from "../../Store/Methods";
+import { useState } from "react";
+import { HiringProgressTypeChanger } from "../../Utils/interfaces/Enums";
 
 const Register = () => {
   const gather: IStep[] = [
@@ -14,10 +18,43 @@ const Register = () => {
     { title: "채용조건", content: ["채용 절차", "제출 서류", "모집 기간", "기타 사항"] },
   ];
   const [recruitment, setRecruitment] = useRecoilState(recruitmentCompany);
+  const [gatherField, setGatherField] = useRecoilState(GatherFieldAtom);
+  const [process, setProcess] = useRecoilState(processAtom);
 
-  const postComplete = () => {
-    // company.postRecruitment();
+  const {
+    preferential_treatment,
+    areas,
+    required_grade,
+    required_licenses,
+    work_hours,
+    train_pay,
+    pay,
+    benefits,
+    military,
+    hiring_progress,
+    submit_document,
+    start_date,
+    end_date,
+    etc,
+  } = recruitment;
+  const postComplete = async () => {
     console.log(recruitment);
+    company.postRecruitment(
+      preferential_treatment,
+      areas,
+      required_grade,
+      required_licenses,
+      work_hours,
+      train_pay,
+      pay,
+      benefits,
+      military,
+      process.map((list: any) => HiringProgressTypeChanger(list.name)),
+      submit_document,
+      start_date,
+      end_date,
+      etc
+    );
   };
 
   return (

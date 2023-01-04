@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { methods, processAtom } from "../../Store/Methods";
 import { isModalAtom } from "../../Store/modal";
 import { recruitmentCompany } from "../../Store/requirement";
+import { HiringProgressTypeChanger } from "../../Utils/interfaces/Enums";
 
 const Certificate = () => {
   const EventBubbling = (event: React.MouseEvent<HTMLElement>) => {
@@ -13,6 +14,7 @@ const Certificate = () => {
   const [method, setMethod] = useRecoilState(methods);
   const [process, setProcess] = useRecoilState(processAtom);
   const [isModal, setIsModal] = useRecoilState(isModalAtom);
+  const [recruitment, setRecruitment] = useRecoilState(recruitmentCompany);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";

@@ -12,7 +12,12 @@ const CheckBox = ({ isCheck, title }: { isCheck?: boolean; title: string }) => {
 
   return (
     <Wrapper>
-      <Input checked={isCheck} onChange={onChange} type="checkbox" />
+      <Input
+        style={{ cursor: title === "병역특례 신청" ? "default" : "not-allowed" }}
+        checked={isCheck}
+        onChange={onChange}
+        type="checkbox"
+      />
       <Text>{title}</Text>
     </Wrapper>
   );
