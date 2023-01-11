@@ -17,6 +17,8 @@ const getTech = () => {
     });
 }
 
-export default {
+const apis = {
     getTech, getJob
 }
+
+export default apis
