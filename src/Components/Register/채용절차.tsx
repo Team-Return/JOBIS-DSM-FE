@@ -1,15 +1,13 @@
-import { useState } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { methods, processAtom } from "../../Store/Methods";
+import { processAtom } from "../../Store/Methods";
 import { isModalAtom, modalTypeAtom } from "../../Store/modal";
 import HiringBox from "./채용절차박스";
 
 const HiringProcess = () => {
   const setIsModal = useSetRecoilState(isModalAtom);
-  const [process, setProcess] = useRecoilState(processAtom);
-  const [method, setMethod] = useRecoilState(methods);
-  const [modalType, setModalType] = useRecoilState(modalTypeAtom);
+  const process = useRecoilValue(processAtom);
+  const setModalType = useSetRecoilState(modalTypeAtom);
 
   return (
     <>

@@ -6,10 +6,9 @@ interface ITech {
   isSelect?: boolean;
 }
 
-interface IField {
-  code: number;
-  keyword: string;
-  isSelect?: boolean;
+export interface techAndFieldType {
+  code: number,
+  keyword: string,
 }
 
 export interface IGatherField {
